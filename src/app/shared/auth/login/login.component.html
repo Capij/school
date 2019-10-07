@@ -1,0 +1,80 @@
+<div class="row">
+
+
+    <div class="col-md-12">
+        <mat-card class="card-width">
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+            <mat-card-header>
+                    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+                    <mat-card-title class="text-center">Iniciar sesión</mat-card-title>
+                    <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+            </mat-card-header>
+
+
+                    <mat-card-content class="text-center">
+
+                        <form  [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+                            <mat-form-field  class="width-f">
+                                <input  type="text"
+                                        id="email"
+                                        matInput
+                                        formControlName="email" 
+                                        placeholder="email"
+                                        required
+                                        > 
+                                        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+                                            <div *ngIf="email.errors.pattern">
+                                                Correo no valido
+                                            </div>
+                                            <div *ngIf="email.errors.required">
+                                                Correo requerido
+                                            </div>  
+                                        </mat-error>
+        
+                            </mat-form-field>        
+
+                            <mat-form-field class="width-f">
+                                    <input  type="password"
+                                            id="password"
+                                            matInput
+                                            formControlName="password"
+                                            placeholder="password"
+                                            required
+                                            > 
+                                            <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">
+                                                <div *ngIf="password.errors.minlength">
+                                                    Contraseña muy corta
+                                                </div>
+                                                <div *ngIf="password.errors.required">
+                                                    Contraseña requerido
+                                                </div>  
+                                            </mat-error>
+
+                             </mat-form-field>                      
+
+                             <div class="row">
+                                <div class="col-md-12">
+                                    <button type="submit" mat-raised-button color="primary">
+                                        Inicio sesion
+                                    </button>
+                                </div>
+                                
+                                <div class="col-md-12 my-md-2">
+                                    <a routerLink="/password_reset"><h6>¿Olvidaste tu contraseña?</h6></a>                                     
+                                </div>
+
+                                <div class="col-md-12 my-md-1">
+                                    <h6 class="d-inline">¿Eres nuevo? <a routerLink="/register">Únete ahora</a></h6>                                     
+                                </div>
+                            </div>
+                        </form>
+                                        
+                    </mat-card-content>
+
+
+        </mat-card>
+    </div>
+
+
+</div>
