@@ -27,6 +27,11 @@ import { DinningComponent } from './pages/dinning/dinning.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { AddGroupsComponent } from './pages/groups/add-groups/add-groups.component';
+import { UsersComponent } from './pages/users/users.component';
+import { TeacherComponent } from './pages/teacher/teacher.component';
+import { GroupAdminComponent } from './pages/group-admin/group-admin.component';
+import { AddGroupAdminComponent } from './pages/group-admin/dialog/add-group-admin/add-group-admin.component';
+import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teacher.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,12 @@ import { AddGroupsComponent } from './pages/groups/add-groups/add-groups.compone
     DinningComponent,
     CalendarComponent,
     GroupsComponent,
-    AddGroupsComponent
+    AddGroupsComponent,
+    UsersComponent,
+    TeacherComponent,
+    GroupAdminComponent,
+    AddGroupAdminComponent,
+    AddTeacherComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +81,10 @@ import { AddGroupsComponent } from './pages/groups/add-groups/add-groups.compone
     MatTabsModule,
     MatSelectModule,
     MatExpansionModule
+  ],
+  entryComponents:[
+    AddGroupAdminComponent,
+    AddTeacherComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
