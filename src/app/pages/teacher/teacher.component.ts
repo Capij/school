@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef} from '@angular/material';
 import { TeacherModel } from '../../models/teacher.model';
 import { AddTeacherComponent } from './dialog/add-teacher/add-teacher.component'
 import { take } from 'rxjs/internal/operators/take';
+import { TeacherService } from './services/teacher.service'
 
 @Component({
   selector: 'app-teacher',
@@ -14,14 +15,18 @@ import { take } from 'rxjs/internal/operators/take';
 })
 export class TeacherComponent implements OnInit {
 
-  displayedColumns: string[] = ['group', 'horario', 'estudiantes','star'];
+  displayedColumns: string[] = ['nombre', 'apellido', 'email','star'];
   dataSource = new MatTableDataSource<TeacherModel>();
 
   dialogRef: MatDialogRef<AddTeacherComponent>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog:MatDialog , private ts:TeacherService) {
+    this.ts.get().subscribe((res)=>{
+      this.dataSource = new MatTableDataSource(res);
+    })
+  }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -39,6 +44,23 @@ export class TeacherComponent implements OnInit {
 
     });
 
+  }
+
+
+  onEdit(teacher){
+    this.dialogRef =  this.dialog.open(AddTeacherComponent,{
+      width: '500px'
+    });
+    
+    this.dialogRef.componentInstance.teacher = teacher
+    this.dialogRef.componentInstance.newTeacher = false;
+
+    this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef) => {
+      if(projectDocRef){
+        this.dialogRef.close();
+      }
+
+    });
   }
 
 }

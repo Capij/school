@@ -15,7 +15,7 @@ export class TeacherService {
   constructor(private router:Router , private afs: AngularFirestore,public afAuth: AngularFireAuth) { }
 
 
-  get(uid:string): Observable<TeacherModel[]>{
+  get(): Observable<TeacherModel[]>{
     return this.afs.collection('teacher').snapshotChanges()
     .pipe(
       map((doc)=>{
