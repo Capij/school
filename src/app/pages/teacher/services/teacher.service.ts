@@ -6,17 +6,20 @@ import { Router } from '@angular/router';
 import { TeacherModel } from '../../../models/teacher.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import * as CryptoJS from 'crypto-js';
+import { AuthService } from '../../../shared/auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeacherService {
 
-  constructor(private router:Router , private afs: AngularFirestore,public afAuth: AngularFireAuth) { }
+  us:TeacherModel;
+  constructor(private router:Router , private afs: AngularFirestore,public afAuth: AngularFireAuth, private auth: AuthService) { }
 
 
   get(): Observable<TeacherModel[]>{
-    return this.afs.collection('teacher').snapshotChanges()
+    return this.afs.collection('teacher', res => res.where('deleted','==',false)).snapshotChanges()
     .pipe(
       map((doc)=>{
         return doc.map((ele) =>{
@@ -30,21 +33,15 @@ export class TeacherService {
   }
 
   async save(teacher: TeacherModel ){
-    //console.log(teacher);
     try {
       return await this.afAuth.auth.createUserWithEmailAndPassword(teacher.email, teacher.password).then((res)=>{
-        let dataTeacher ={
-          name: teacher.name,
-          last_name: teacher.last_name,
-          email: teacher.email,
-          deleted: false,
-          password: false,
-          admin: false,
-          tid: res.user.uid,
-          subjects: teacher.subjects 
-        }
 
-        return this.afs.collection('teacher').add(dataTeacher);
+          teacher.deleted = false;
+          teacher.pass = false;
+          teacher.admin = false;
+          teacher.uid = res.user.uid;
+
+          return this.afs.collection('teacher').add(teacher);
 
       });   
 
@@ -56,7 +53,6 @@ export class TeacherService {
       throw e;
     }
 
-    //return this.afs.collection('teacher').add(teacher);
   }
 
   update(teacher:TeacherModel){
@@ -68,7 +64,13 @@ export class TeacherService {
 
   }
 
-  delete(teacher: TeacherModel){
-    return this.afs.doc(`teacher/${teacher.id}`).delete();
+  async delete(teacher: TeacherModel, uid:string){
+
+    return this.afs.collection<TeacherModel>('teacher', res => res.where('uid','==', uid)).valueChanges().subscribe((res)=>{
+        this.auth.remove(teacher);
+        teacher.deleted = true;
+        return this.afs.doc<TeacherModel>(`teacher/${teacher.id}`).update(teacher);
+     });
+
   }
 }

@@ -58,7 +58,7 @@
 
                         <mat-form-field class="col-md-12">
                                 <mat-select name="typeTime" formControlName="subjects" placeholder="Materias" multiple>
-                                  <mat-option *ngFor="let subject of subjectsD" [value]="subject.value">
+                                  <mat-option *ngFor="let subject of subjectsD" [value]="subject.id">
                                     {{subject.name}}
                                   </mat-option>
                                 </mat-select>

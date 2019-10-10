@@ -32,6 +32,7 @@ import { TeacherComponent } from './pages/teacher/teacher.component';
 import { GroupAdminComponent } from './pages/group-admin/group-admin.component';
 import { AddGroupAdminComponent } from './pages/group-admin/dialog/add-group-admin/add-group-admin.component';
 import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teacher.component';
+import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/delete-teacher.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teac
     TeacherComponent,
     GroupAdminComponent,
     AddGroupAdminComponent,
-    AddTeacherComponent
+    AddTeacherComponent,
+    DeleteTeacherComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,7 +86,8 @@ import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teac
   ],
   entryComponents:[
     AddGroupAdminComponent,
-    AddTeacherComponent
+    AddTeacherComponent,
+    DeleteTeacherComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

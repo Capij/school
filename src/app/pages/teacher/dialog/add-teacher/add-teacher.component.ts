@@ -2,6 +2,7 @@ import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl ,Validators } from '@angular/forms';
 import { TeacherModel } from '../../../../models/teacher.model';
 import { TeacherService } from '../../services/teacher.service';
+import { GeneralService } from '../../../../shared/services/general.service'
 import { Observable } from 'rxjs';
 
 export interface sub{
@@ -23,12 +24,8 @@ export class AddTeacherComponent implements OnInit {
   stop = false;
   hide = true;
 
-  subjectsD: sub[] = [
-    {value:1, name:"Español"},
-    {value:2, name:"Matematicas"},
-    {value:3, name:"Geografia"},
-    {value:4, name:"Historial"}
-  ]
+  subjectsD:any;
+
   members : Observable<TeacherModel[]>;
 
 
@@ -44,8 +41,11 @@ export class AddTeacherComponent implements OnInit {
 
   uid :string;
 
-  constructor( private ts: TeacherService) {
+  constructor( private ts: TeacherService, private gs:GeneralService) {
     
+    this.gs.subjects().subscribe((sub)=>{
+        this.subjectsD = sub;
+    })
 
   }
 

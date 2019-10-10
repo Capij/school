@@ -31,7 +31,7 @@ export class GroupAdminComponent implements OnInit {
   
   addGroup(): void{
     this.dialogRef =  this.dialog.open(AddGroupAdminComponent,{
-      width: '500px'
+      width: '800px'
     });
     
     this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef) => {

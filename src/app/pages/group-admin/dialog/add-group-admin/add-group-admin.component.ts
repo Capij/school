@@ -3,53 +3,64 @@ import { FormGroup, FormControl ,Validators } from '@angular/forms';
 import { GroupsModel } from '../../../../models/groups.model';
 import { GroupService } from '../../service/group.service';
 import { Observable } from 'rxjs';
+import { TeacherService } from '../../../teacher/services/teacher.service';
+import { TeacherModel } from '../../../../models/teacher.model';
+import { GeneralService } from '../../../../shared/services/general.service';
 
 @Component({
   selector: 'app-add-group-admin',
   templateUrl: './add-group-admin.component.html',
   styleUrls: ['./add-group-admin.component.css']
 })
+
 export class AddGroupAdminComponent implements OnInit {
 
   @Input() project: GroupsModel; 
   @Input() newProject =  true;
   @Output() save =  new EventEmitter();
+  
   stop = false;
 
+  fromNew =  new FormGroup({
+    name: new FormControl('',  [ Validators.required ]),
+    grade: new FormControl('', [ Validators.required ]),
+    hour: new FormControl('',  [ Validators.required ]),
 
-  members : Observable<GroupsModel[]>;
-
-
-
-  fromNewProyects =  new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(5)]),
-    typeTime: new FormControl('', [Validators.required]),
-    projectTime: new FormControl('',[Validators.required]),
-    desc: new FormControl(''),
-    members: new FormControl([''])
   });
 
 
   uid :string;
+  
+  teacherSearch: TeacherModel[];
+  teacherData: TeacherModel[];
+  
+  subjects: any[];
 
-  constructor( private gs: GroupService) {
+  constructor( private gs: GroupService, private ts:TeacherService, private general:GeneralService) {
     
+    this.ts.get().subscribe((res)=>{
+      this.teacherSearch = res;
+    })
+
+    this.general.subjects().subscribe((res)=>{
+      this.subjects = res;
+    })
 
   }
 
   ngOnInit() {
     if(this.project){
-      this.fromNewProyects.patchValue(this.project);
+      this.fromNew.patchValue(this.project);
     }
   }
 
   onSave(){  
     this.stop = true;
-    if(this.fromNewProyects.valid){
+    if(this.fromNew.valid){
       if(!this.newProject && this.project){
         const projectUpdated ={
           id: this.project.id,
-          ...this.fromNewProyects.value
+          ...this.fromNew.value
         };
         this.gs.update(projectUpdated)
         .then(() => this.save.emit(projectUpdated))
@@ -57,10 +68,10 @@ export class AddGroupAdminComponent implements OnInit {
 
       }else{
         //console.log(this.fromNewProyects.value.typeTime)
-        this.fromNewProyects.value.timestamp = Date.now();
-        this.fromNewProyects.value.uid = this.uid;
+        this.fromNew.value.timestamp = Date.now();
+        this.fromNew.value.uid = this.uid;
 
-        this.gs.save(this.fromNewProyects.value)
+        this.gs.save(this.fromNew.value)
         .then((res)=>{this.save.emit(res)})
         .catch((err)=> console.log(err));
       
@@ -71,4 +82,17 @@ export class AddGroupAdminComponent implements OnInit {
     }
 
   }
+
+  someMethod(search:string){
+    
+    this.teacherData = [];
+    this.teacherSearch.forEach((res)=>{
+      if(res.subjects.indexOf(search) != -1){
+        this.teacherData.push(res);
+      }
+    })
+
+
+  }
+
 }

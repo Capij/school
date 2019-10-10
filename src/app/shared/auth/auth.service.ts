@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as CryptoJS from 'crypto-js';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,27 @@ export class AuthService {
     this.router.navigate(['login']);
   }
 
+  remove(user: any) { 
+    try {
+      this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password).then((info)=>{ 
+              var user = firebase.auth().currentUser; 
+              user.delete();
+
+              
+              this.afAuth.auth.signInWithEmailAndPassword('emmanuel_12x@hotmail.com','82986589');
+            }); 
+    
+
+    } catch (e) {
+    console.error(e);
+    if (e.message) {
+      alert(e.message);
+    }
+    throw e;
+  }
+  }
+
+
   get authenticated(): boolean {
     return firebase.auth().currentUser !== null;
   }
@@ -72,4 +94,6 @@ export class AuthService {
   get currentUserObservable(): Observable<firebase.User> {
     return this.afAuth.user;
   }
+
+
 }

@@ -5,6 +5,7 @@ export interface TeacherModel{
     email: string,
     deleted: boolean,
     password: string,
+    pass:boolean,
     admin: boolean,
     uid: string,
     subjects:Array<string>
