@@ -12,6 +12,7 @@ import { GroupsComponent } from './pages/groups/groups.component';
 import { UsersComponent } from './pages/users/users.component';
 import { TeacherComponent } from './pages/teacher/teacher.component';
 import { GroupAdminComponent } from './pages/group-admin/group-admin.component';
+import { ViewGroupAComponent } from './pages/group-admin/view-group-a/view-group-a.component'
 
 export const ROUTES: Routes = 
 [
@@ -25,7 +26,7 @@ export const ROUTES: Routes =
     { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
     { path: 'teachers', component: TeacherComponent, canActivate: [AuthGuard] },
     { path: 'group_admin', component: GroupAdminComponent, canActivate: [AuthGuard] },
-    
+    { path: 'group/:type/:id', component: ViewGroupAComponent, canActivate: [AuthGuard] },
 
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },

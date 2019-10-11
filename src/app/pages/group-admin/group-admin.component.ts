@@ -6,7 +6,8 @@ import { MatDialog, MatDialogRef} from '@angular/material';
 import { GroupsModel } from '../../models/groups.model'
 import { AddGroupAdminComponent } from './dialog/add-group-admin/add-group-admin.component'
 import { take } from 'rxjs/internal/operators/take';
-
+import { GroupService } from './service/group.service';
+import { Router } from '@angular/router';
 
 
 
@@ -16,14 +17,18 @@ import { take } from 'rxjs/internal/operators/take';
   styleUrls: ['./group-admin.component.css']
 })
 export class GroupAdminComponent implements OnInit {
-  displayedColumns: string[] = ['group', 'horario', 'estudiantes','star'];
+  displayedColumns: string[] = ['group', 'responsable','grade','studensts','star'];
   dataSource = new MatTableDataSource<GroupsModel>();
 
   dialogRef: MatDialogRef<AddGroupAdminComponent>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private dialog:MatDialog) { }
+  constructor(private dialog:MatDialog, private gs:GroupService, private router:Router) {
+    this.gs.get().subscribe((res)=>{
+      this.dataSource =  new MatTableDataSource(res);
+    })
+  }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -31,7 +36,7 @@ export class GroupAdminComponent implements OnInit {
   
   addGroup(): void{
     this.dialogRef =  this.dialog.open(AddGroupAdminComponent,{
-      width: '800px'
+      width: '500px'
     });
     
     this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef) => {
@@ -41,6 +46,22 @@ export class GroupAdminComponent implements OnInit {
 
     });
 
+  }
+
+  onEdit(group): void{
+    this.dialogRef =  this.dialog.open(AddGroupAdminComponent,{
+      width: '500px'
+    });
+    
+    this.dialogRef.componentInstance.group = group;
+    this.dialogRef.componentInstance.newGroup = false;
+
+    this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef) => {
+      if(projectDocRef){
+        this.dialogRef.close();
+      }
+
+    });
   }
 
 }

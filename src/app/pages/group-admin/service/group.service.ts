@@ -12,9 +12,9 @@ export class GroupService {
 
   constructor(private router:Router , private afs: AngularFirestore) { }
 
+  get(): Observable<GroupsModel[]>{
 
-  get(uid:string): Observable<GroupsModel[]>{
-    return this.afs.collection('groups').snapshotChanges()
+    return this.afs.collection('groups',res => res.where('archived','==',false)).snapshotChanges()
     .pipe(
       map((doc)=>{
         return doc.map((ele) =>{
@@ -27,8 +27,25 @@ export class GroupService {
     )
   }
 
+  getGroup(id:string){
+    
+    return this.afs.collection('groups').doc(id).get()
+    .pipe(
+      map((res)=>{
+        return res.data() as GroupsModel;
+      })
+      )
+
+  }
+
+
   save(group: GroupsModel ){
+    group.studens = 0;
+    group.archived = false;
+    group.timestap = Date.now();
+    console.log(group);
     return this.afs.collection('groups').add(group);
+ 
   }
 
   update(group:GroupsModel){

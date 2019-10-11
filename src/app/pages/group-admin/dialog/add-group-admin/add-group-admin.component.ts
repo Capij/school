@@ -15,8 +15,8 @@ import { GeneralService } from '../../../../shared/services/general.service';
 
 export class AddGroupAdminComponent implements OnInit {
 
-  @Input() project: GroupsModel; 
-  @Input() newProject =  true;
+  @Input() group: GroupsModel; 
+  @Input() newGroup =  true;
   @Output() save =  new EventEmitter();
   
   stop = false;
@@ -24,22 +24,20 @@ export class AddGroupAdminComponent implements OnInit {
   fromNew =  new FormGroup({
     name: new FormControl('',  [ Validators.required ]),
     grade: new FormControl('', [ Validators.required ]),
-    hour: new FormControl('',  [ Validators.required ]),
+    teacher: new FormControl('',  [ Validators.required ]),
 
   });
 
 
   uid :string;
-  
-  teacherSearch: TeacherModel[];
-  teacherData: TeacherModel[];
+    teacherData: TeacherModel[];
   
   subjects: any[];
 
   constructor( private gs: GroupService, private ts:TeacherService, private general:GeneralService) {
     
     this.ts.get().subscribe((res)=>{
-      this.teacherSearch = res;
+      this.teacherData = res;
     })
 
     this.general.subjects().subscribe((res)=>{
@@ -49,17 +47,17 @@ export class AddGroupAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.project){
-      this.fromNew.patchValue(this.project);
+    if(this.group){
+      this.fromNew.patchValue(this.group);
     }
   }
 
   onSave(){  
     this.stop = true;
     if(this.fromNew.valid){
-      if(!this.newProject && this.project){
+      if(!this.newGroup && this.group){
         const projectUpdated ={
-          id: this.project.id,
+          id: this.group.id,
           ...this.fromNew.value
         };
         this.gs.update(projectUpdated)
@@ -68,8 +66,6 @@ export class AddGroupAdminComponent implements OnInit {
 
       }else{
         //console.log(this.fromNewProyects.value.typeTime)
-        this.fromNew.value.timestamp = Date.now();
-        this.fromNew.value.uid = this.uid;
 
         this.gs.save(this.fromNew.value)
         .then((res)=>{this.save.emit(res)})
@@ -83,16 +79,5 @@ export class AddGroupAdminComponent implements OnInit {
 
   }
 
-  someMethod(search:string){
-    
-    this.teacherData = [];
-    this.teacherSearch.forEach((res)=>{
-      if(res.subjects.indexOf(search) != -1){
-        this.teacherData.push(res);
-      }
-    })
-
-
-  }
 
 }

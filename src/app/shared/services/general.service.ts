@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 
 
-export interface SubjectsModel{
+export interface SubjectModel{
     id  ?: string,
     name : string
 }
@@ -17,7 +17,7 @@ export class GeneralService {
 
   constructor(private afs:AngularFirestore ) { }
 
-  subjects(): Observable<SubjectsModel[]>{
+  subjects(): Observable<SubjectModel[]>{
     return this.afs.collection('subjects').snapshotChanges()
     .pipe(
       map((doc)=>{
@@ -26,7 +26,7 @@ export class GeneralService {
             id: ele.payload.doc.id,
             ...ele.payload.doc.data()
           }
-        }) as SubjectsModel[];
+        }) as SubjectModel[];
       })
     )
   }

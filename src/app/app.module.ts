@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
 import { MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
-import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -33,6 +34,8 @@ import { GroupAdminComponent } from './pages/group-admin/group-admin.component';
 import { AddGroupAdminComponent } from './pages/group-admin/dialog/add-group-admin/add-group-admin.component';
 import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teacher.component';
 import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/delete-teacher.component';
+import { ViewGroupAComponent } from './pages/group-admin/view-group-a/view-group-a.component';
+import { AddDayComponent } from './pages/group-admin/dialog/add-day/add-day.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,8 @@ import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/de
     AddGroupAdminComponent,
     AddTeacherComponent,
     DeleteTeacherComponent,
+    ViewGroupAComponent,
+    AddDayComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,11 +87,13 @@ import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/de
     MatPaginatorModule,
     MatTabsModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   entryComponents:[
     AddGroupAdminComponent,
     AddTeacherComponent,
+    AddDayComponent,
     DeleteTeacherComponent
   ],
   providers: [],
