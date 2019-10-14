@@ -1,8 +1,9 @@
 export interface UsersModel{
     id ?:string
     name:string,
-    emial:string,
+    email:string,
     deleted:boolean,
-    password: boolean,
+    password: string,
+    pass:boolean,
     uid:string
 }

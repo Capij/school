@@ -14,7 +14,7 @@
                                 </mat-icon>
                             </button>
                             -->
-                            <button mat-fab color="primary" (click)="addDay()">
+                            <button mat-fab color="primary" (click)="add()">
                                     <mat-icon aria-hidden="false" >
                                         add
                                     </mat-icon>
@@ -26,8 +26,8 @@
                 </div>
 
                         
-                        <mat-tab-group>
-                            <mat-tab label=Horario>
+                        <mat-tab-group (selectedTabChange)="mode($event)" *ngIf="group">
+                            <mat-tab label=Horario >
                 
                                 <div style="display:-webkit-box; display: felx; flex-wrap: wrap;">
 
@@ -36,96 +36,22 @@
  
                                             </mat-card>
                                             <mat-accordion>
-                                                    <mat-expansion-panel>
+                                                    <mat-expansion-panel *ngFor="let monday of group.week.monday ">
                     
                                                       <mat-expansion-panel-header>
                                                         <mat-panel-title>
-                                                          9-10
+                                                          {{ hours[monday.hourInit-1].hour }}
                                                         </mat-panel-title>
                                                         <mat-panel-description>
-                                                            His...
+                                                          {{ monday.subjectName }}
                                                         </mat-panel-description>
                                                       </mat-expansion-panel-header>
                                                   
-                                                      <h6>Historia</h6>
-                                                      <h6>Jose Emmanuel</h6>
+                                                      <h6>{{ monday.subjectName }}</h6>
+                                                      <h6>{{ monday.teacherName }}</h6>
                     
                                                     </mat-expansion-panel>
                     
-                                                    <mat-expansion-panel>
-                    
-                                                        <mat-expansion-panel-header>
-                                                            <mat-panel-title>
-                                                                10-11
-                                                            </mat-panel-title>
-                                                            <mat-panel-description>
-                                                                Mate...
-                                                            </mat-panel-description>
-                                                        </mat-expansion-panel-header>
-                                                    
-                                                        <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>    
-                                        
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                  11-12
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                 Fis...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
-
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                 12-13
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                    EF...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
-
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header >
-                                                              <mat-panel-title>
-                                                                13-14
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                Esp...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
-
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                14-15
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                Geo...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
                                             </mat-accordion>
                     
                                     </div>
@@ -134,116 +60,123 @@
                                     <div class="col-md-2">
                                             <mat-card class="text-center mb-md-3">Martes</mat-card>
                                             <mat-accordion>
-                                                    <mat-expansion-panel>
+                                                <mat-expansion-panel *ngFor="let tuesday of group.week.tuesday ">
                     
-                                                      <mat-expansion-panel-header>
-                                                        <mat-panel-title>
-                                                          9am-9:55am
-                                                        </mat-panel-title>
-                                                        <mat-panel-description>
-                                                            His...
-                                                        </mat-panel-description>
-                                                      </mat-expansion-panel-header>
-                                                  
-                                                      <h6>Descripcion de la tarea</h6>
+                                                    <mat-expansion-panel-header>
+                                                      <mat-panel-title>
+                                                        {{ hours[tuesday.hourInit-1].hour }}
+                                                      </mat-panel-title>
+                                                      <mat-panel-description>
+                                                        {{ tuesday.subjectName }}
+                                                      </mat-panel-description>
+                                                    </mat-expansion-panel-header>
+                                                
+                                                    <h6>{{ tuesday.subjectName }}</h6>
+                                                    <h6>{{ tuesday.teacherName }}</h6>
+                  
+                                                  </mat-expansion-panel>
                     
-                                                    </mat-expansion-panel>
-                    
-                                                    <mat-expansion-panel>
-                    
-                                                        <mat-expansion-panel-header>
-                                                            <mat-panel-title>
-                                                                10am-10:55am
-                                                            </mat-panel-title>
-                                                            <mat-panel-description>
-                                                                Mate...
-                                                            </mat-panel-description>
-                                                        </mat-expansion-panel-header>
-                                                    
-                                                        <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>    
-                                        
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                  11am-11:55am
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                 Fis...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
 
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                 12pm-12:55pm
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                    EF...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
-
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                13pm-13:55pm
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                Esp...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
-
-                                                    <mat-expansion-panel>
-                    
-                                                            <mat-expansion-panel-header>
-                                                              <mat-panel-title>
-                                                                14pm-14:55pm
-                                                              </mat-panel-title>
-                                                              <mat-panel-description>
-                                                                Geo...
-                                                              </mat-panel-description>
-                                                            </mat-expansion-panel-header>
-                                                        
-                                                            <h6>Descripcion de la tarea</h6>
-                          
-                                                    </mat-expansion-panel>
                                             </mat-accordion>
                                     </div>
 
 
                                     <div class="col-md-2">
                                             <mat-card class="text-center mb-md-3">Miercoles</mat-card>
+                                            <mat-accordion>
+                                                <mat-expansion-panel *ngFor="let wednesday of group.week.wednesday ">
+                    
+                                                    <mat-expansion-panel-header>
+                                                      <mat-panel-title>
+                                                        {{ hours[wednesday.hourInit-1].hour }}
+                                                      </mat-panel-title>
+                                                      <mat-panel-description>
+                                                        {{ wednesday.subjectName }}
+                                                      </mat-panel-description>
+                                                    </mat-expansion-panel-header>
+                                                
+                                                    <h6>{{ wednesday.subjectName }}</h6>
+                                                    <h6>{{ wednesday.teacherName }}</h6>
+                  
+                                                  </mat-expansion-panel>
+                    
+
+                                            </mat-accordion>
+
                                     </div>
 
 
                                     <div class="col-md-2">
                                             <mat-card class="text-center mb-md-3">Jueves</mat-card>
+                                            <mat-accordion>
+                                                <mat-expansion-panel *ngFor="let thursday of group.week.thursday ">
+                    
+                                                    <mat-expansion-panel-header>
+                                                      <mat-panel-title>
+                                                        {{ hours[thursday.hourInit-1].hour }}
+                                                      </mat-panel-title>
+                                                      <mat-panel-description>
+                                                        {{ thursday.subjectName }}
+                                                      </mat-panel-description>
+                                                    </mat-expansion-panel-header>
+                                                
+                                                    <h6>{{ thursday.subjectName }}</h6>
+                                                    <h6>{{ thursday.teacherName }}</h6>
+                  
+                                                  </mat-expansion-panel>
+                    
+
+                                            </mat-accordion>
+
                                     </div>
 
 
                                     <div class="col-md-2">
                                             <mat-card class="text-center mb-md-3">Viernes</mat-card>
+                                            <mat-accordion>
+                                                <mat-expansion-panel *ngFor="let friday of group.week.friday ">
+                    
+                                                    <mat-expansion-panel-header>
+                                                      <mat-panel-title>
+                                                        {{ hours[friday.hourInit-1].hour }}
+                                                      </mat-panel-title>
+                                                      <mat-panel-description>
+                                                        {{ friday.subjectName }}
+                                                      </mat-panel-description>
+                                                    </mat-expansion-panel-header>
+                                                
+                                                    <h6>{{ friday.subjectName }}</h6>
+                                                    <h6>{{ friday.teacherName }}</h6>
+                  
+                                                  </mat-expansion-panel>
+                    
+
+                                            </mat-accordion>                                            
                                     </div>
 
 
                                     <div class="col-md-2">
                                             <mat-card class="text-center mb-md-3">Sabado</mat-card>
+                                            <mat-accordion>
+                                                <mat-expansion-panel *ngFor="let saturday of group.week.saturday ">
+                    
+                                                    <mat-expansion-panel-header>
+                                                      <mat-panel-title>
+                                                        {{ hours[saturday.hourInit-1].hour }}
+                                                      </mat-panel-title>
+                                                      <mat-panel-description>
+                                                        {{ saturday.subjectName }}
+                                                      </mat-panel-description>
+                                                    </mat-expansion-panel-header>
+                                                
+                                                    <h6>{{ saturday.subjectName }}</h6>
+                                                    <h6>{{ saturday.teacherName }}</h6>
+                  
+                                                  </mat-expansion-panel>
+                    
+
+                                            </mat-accordion>    
+
                                     </div>
 
 
@@ -253,20 +186,16 @@
                                 </div>
 
                                   
-    
-    
-    
                             </mat-tab>
-                            <mat-tab label="Estudiantes">
+                            <mat-tab label="Estudiantes" >
                      
 
-                        
-    
-    
                             </mat-tab>
   
                         </mat-tab-group>
                     
+                        <mat-spinner *ngIf="!(group)" style="margin: auto;"></mat-spinner>
+
 
             </div>
         

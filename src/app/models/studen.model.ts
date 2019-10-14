@@ -3,7 +3,7 @@ export interface StudenModel{
     groupID:string,
     usersID: Array<string>
     name: string,
-    lastName: string,
+    last_name: string,
     money: number,
     groupsID: Array<string>,
     timestap: number

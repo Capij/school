@@ -2,6 +2,7 @@ import { Component, OnInit,Input,Output,EventEmitter,ViewChild, ElementRef } fro
 import { FormGroup, FormControl ,Validators } from '@angular/forms';
 
 import { GroupsModel , SubjectsModel, DaysModel} from '../../../../models/groups.model';
+import { GroupService } from '../../service/group.service';
 import { TeacherModel } from '../../../../models/teacher.model';
 import { TeacherService } from '../../../teacher/services/teacher.service';
 import { GeneralService,SubjectModel } from '../../../../shared/services/general.service';
@@ -98,7 +99,7 @@ export class AddDayComponent implements OnInit {
 
   });
 
-  constructor(private generalS:GeneralService, private ts: TeacherService) {
+  constructor(private generalS:GeneralService, private ts: TeacherService, private gs: GroupService) {
 
     this.generalS.subjects().subscribe((res)=>{
       this.sunjects = res;
@@ -107,6 +108,7 @@ export class AddDayComponent implements OnInit {
     this.ts.get().subscribe((res)=>{
       this.teacherData =  res;
     })
+
 
   }
 
@@ -173,7 +175,7 @@ export class AddDayComponent implements OnInit {
                 hourEnd : this.fromNew.value.hourEnd,
                 break: false
               };
-              console.log(ob);
+
               this.daySubjects.push(ob);
     }else{
       this.error= 'El horario se empalma';
@@ -185,37 +187,61 @@ export class AddDayComponent implements OnInit {
   onSave(){
 
     if(this.fromNew.value.monday){
-      this.daySubjects.forEach((res)=>{
-        this.weekSave.monday.push(res);
-      })
-    }
-    if(this.fromNew.value.tuesday){
-      this.daySubjects.forEach((res)=>{
-        this.weekSave.tuesday.push(res);
-      })
-    }
-    if(this.fromNew.value.wednesday){
-      this.daySubjects.forEach((res)=>{
-        this.weekSave.wednesday.push(res);
-      })
-    }
-    if(this.fromNew.value.thursday){
-      this.daySubjects.forEach((res)=>{
-        this.weekSave.thursday.push(res);
-      })
-    }
-    if(this.fromNew.value.friday){
-      this.daySubjects.forEach((res)=>{
-        this.weekSave.friday.push(res);
-      })
-    }
-    if(this.fromNew.value.saturday){
-      this.daySubjects.forEach((res)=>{
-        this.weekSave.saturday.push(res);
-      })
+      this.group.week.monday = [];
     }
 
-    console.log(this.weekSave);
+    if(this.fromNew.value.tuesday){
+        this.group.week.tuesday = [];
+    }
+
+    if(this.fromNew.value.wednesday){
+        this.group.week.wednesday = [];
+    }
+
+    if(this.fromNew.value.thursday){
+        this.group.week.tuesday = [];
+    }
+
+    if(this.fromNew.value.friday){
+        this.group.week.friday = [];
+    }
+
+    if(this.fromNew.value.saturday){
+        this.group.week.saturday = [];
+    }
+
+    this.daySubjects.forEach((res)=>{
+
+      if(this.fromNew.value.monday){
+          this.group.week.monday.push(res);
+      }
+
+      if(this.fromNew.value.tuesday){
+          this.group.week.tuesday.push(res);
+      }
+
+      if(this.fromNew.value.wednesday){
+          this.group.week.wednesday.push(res);
+      }
+
+      if(this.fromNew.value.thursday){
+          this.group.week.thursday.push(res);
+      }
+
+      if(this.fromNew.value.friday){
+          this.group.week.friday.push(res);
+      }
+
+      if(this.fromNew.value.saturday){
+          this.group.week.saturday.push(res);
+      }
+
+    })
+
+    this.gs.update(this.group).then((res)=>{
+       this.save.emit(this.group);
+    });
+  
   }
 
 

@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
-import { MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
+import { MatProgressSpinnerModule, MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -36,6 +36,7 @@ import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teac
 import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/delete-teacher.component';
 import { ViewGroupAComponent } from './pages/group-admin/view-group-a/view-group-a.component';
 import { AddDayComponent } from './pages/group-admin/dialog/add-day/add-day.component';
+import { AddUserComponent } from './pages/users/dialog/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { AddDayComponent } from './pages/group-admin/dialog/add-day/add-day.comp
     DeleteTeacherComponent,
     ViewGroupAComponent,
     AddDayComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,13 +90,15 @@ import { AddDayComponent } from './pages/group-admin/dialog/add-day/add-day.comp
     MatTabsModule,
     MatSelectModule,
     MatExpansionModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
   entryComponents:[
     AddGroupAdminComponent,
     AddTeacherComponent,
     AddDayComponent,
-    DeleteTeacherComponent
+    DeleteTeacherComponent,
+    AddUserComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
