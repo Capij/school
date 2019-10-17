@@ -1,33 +1,10 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, OnInit,Input, Output, EventEmitter ,ViewChild} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef} from '@angular/material';
+import { AddStudentComponent } from './dialog/add-student/add-student.component';
+import { take } from 'rxjs/internal/operators/take';
 
-
-export interface studens {
-  id: number;
-  name: string;
-}
-
-
-export interface PeriodicElement {
-  materia: string;
-  id: number;
-  exa1: number;
-  exa2: number;
-  exa3: number;
-  exa4: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: 1, materia: 'Espñol', exa1: 90, exa2: 90,exa3: 90,exa4: 90,},
-  {id: 2, materia: 'Matematicas', exa1: 92, exa2: 80,exa3: 93,exa4: 90,},
-  {id: 3, materia: 'Fisica', exa1: 89, exa2: 76,exa3: 90,exa4: 90,},
-  {id: 4, materia: 'Computo', exa1: 100, exa2: 95,exa3: 90,exa4: 70,},
-  {id: 5, materia: 'Deportes', exa1: 99, exa2: 90,exa3: 95,exa4: 90,},
-  {id: 6, materia: 'Historia', exa1: 85, exa2: 95,exa3: 90,exa4: 79,},
-  {id: 7, materia: 'Artes', exa1: 90, exa2: 86,exa3: 90,exa4: 90,},
-
-];
 
 
 @Component({
@@ -37,19 +14,32 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class StudensComponent implements OnInit {
+
+
   studen = 1;
 
-  studens:studens[] =[
-    {id: 1, name: "jose"},
-    {id: 2, name: "emmanuel"}
-  ];
+  dialogRef: MatDialogRef<AddStudentComponent>;
 
-  displayedColumns: string[] = ['materia', 'exam1', 'exam2', 'exam3','exam4'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-
+  displayedColumns: string[] = ['nombre', 'apellido','group', 'star'];
+  //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  
+  constructor(private dialog:MatDialog ) {}
 
   ngOnInit() {
   }
 
+  
+  addStudent(): void{
+    this.dialogRef =  this.dialog.open(AddStudentComponent,{
+      width: '500px'
+    });
+    
+    this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef) => {
+      if(projectDocRef){
+        this.dialogRef.close();
+      }
 
+    });
+
+  }
 }

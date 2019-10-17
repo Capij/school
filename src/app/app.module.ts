@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
-import { MatProgressSpinnerModule, MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
+import { MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -37,6 +37,8 @@ import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/de
 import { ViewGroupAComponent } from './pages/group-admin/view-group-a/view-group-a.component';
 import { AddDayComponent } from './pages/group-admin/dialog/add-day/add-day.component';
 import { AddUserComponent } from './pages/users/dialog/add-user/add-user.component';
+import { StudenComponent } from './pages/studen/studen.component';
+import { AddStudentComponent } from './pages/studens/dialog/add-student/add-student.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { AddUserComponent } from './pages/users/dialog/add-user/add-user.compone
     ViewGroupAComponent,
     AddDayComponent,
     AddUserComponent,
+    StudenComponent,
+    AddStudentComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,14 +95,17 @@ import { AddUserComponent } from './pages/users/dialog/add-user/add-user.compone
     MatSelectModule,
     MatExpansionModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatAutocompleteModule
+    
   ],
   entryComponents:[
     AddGroupAdminComponent,
     AddTeacherComponent,
     AddDayComponent,
     DeleteTeacherComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddStudentComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

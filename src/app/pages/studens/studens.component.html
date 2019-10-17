@@ -6,17 +6,13 @@
     
                     <div class="card-body d-flex align-items-center" style="padding-bottom: 0px !important">
                         <h4>Estudiante</h4>
-                      <!--  <button mat-fab color="primary" >
-                            <mat-icon aria-hidden="false" >
+                        <button mat-fab color="primary" >
+                            <mat-icon aria-hidden="false" (click)="addStudent()">
                                 add
                             </mat-icon>
                         </button>
-                        -->
-                        <mat-form-field style="padding-left: 20px">
-                            <mat-select [(value)]="studen">
-                              <mat-option *ngFor="let studenn of studens" [value]="studenn.id">{{studenn.name}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+
+
                           
                     </div>
                     
@@ -24,94 +20,49 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    
-                    <mat-tab-group>
-                        <mat-tab label=Tareas>
-            
-                            <mat-accordion>
-                                <mat-expansion-panel>
-
-                                  <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                      Historia
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-                                      Fecha de entrega
-                                    </mat-panel-description>
-                                  </mat-expansion-panel-header>
-                              
-                                  <h6>Descripcion de la tarea</h6>
-
-                                </mat-expansion-panel>
-
-
-                                <mat-expansion-panel>
+                        <div class="mat-elevation-z8">
+                                <table mat-table [dataSource]="dataSource">
+        
+                                    <!-- Name Column -->
+                                    <ng-container matColumnDef="nombre">
+                                    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                    </ng-container>
+        
+                                    <!-- Weight Column -->
+                                    <ng-container matColumnDef="apellido">
+                                    <th mat-header-cell *matHeaderCellDef> Apellido </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+                                    </ng-container>
+        
+                                    <!-- Symbol Column -->
+                                    <ng-container matColumnDef="group">
+                                    <th mat-header-cell *matHeaderCellDef> Grupo </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+                                    </ng-container>
+        
+                                    <ng-container matColumnDef="star" >
+                                            <th mat-header-cell *matHeaderCellDef></th>
+                                            <td mat-cell *matCellDef="let element" class="actions-table">
+                                                <button mat-button [matMenuTriggerFor]="beforeMenu" class="a-table">
+                                                    <mat-icon>more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #beforeMenu="matMenu" xPosition="before">
+                                                    <button mat-menu-item (click)="onEdit(element)" >Editar</button>
+                                                    <button mat-menu-item (click)="onRemove(element)" >Eliminar</button>
+                                                </mat-menu>
+                                                    
+                                            </td>
+                                    </ng-container>
+        
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+        
+                                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                </div>
                             
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                      Matematicas
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-                                      Fecha de entrega
-                                    </mat-panel-description>
-                                  </mat-expansion-panel-header>
-                                  <h6>2 + 3 = ?       </h6>
-                                  <h6>5 * 4 = ?       </h6>
-                                  <h6>(5 * 7)/2.5 = ? </h6>
-                                </mat-expansion-panel>
-                            
-                            </mat-accordion>
 
-                              
-
-
-
-
-                        </mat-tab>
-                        <mat-tab label="Calificaciones">
-                 
-                            <div class="mat-elevation-z8">
-                              <table mat-table [dataSource]="dataSource" style="width: 100%">
-                                  <!-- Position Column -->
-                                  <ng-container matColumnDef="materia">
-                                  <th mat-header-cell *matHeaderCellDef> Materia </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.materia}} </td>
-                                  </ng-container>
-      
-                                  <!-- Name Column -->
-                                  <ng-container matColumnDef="exam1">
-                                  <th mat-header-cell *matHeaderCellDef> examen 1 </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.exa1}} </td>
-                                  </ng-container>
-      
-                                  <!-- Weight Column -->
-                                  <ng-container matColumnDef="exam2">
-                                  <th mat-header-cell *matHeaderCellDef> examen 2 </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.exa2}} </td>
-                                  </ng-container>
-      
-                                  <!-- Symbol Column -->
-                                  <ng-container matColumnDef="exam3">
-                                  <th mat-header-cell *matHeaderCellDef> examen 3 </th>
-                                  <td mat-cell *matCellDef="let element"> {{element.exa3}} </td>
-                                  </ng-container>
-
-                                  <ng-container matColumnDef="exam4">
-                                          <th mat-header-cell *matHeaderCellDef> examen 4 </th>
-                                          <td mat-cell *matCellDef="let element"> {{element.exa4}} </td>
-                                  </ng-container>                                                
-
-      
-                                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                              </table>
-      
-                            </div>
-                    
-
-
-                        </mat-tab>
-                    </mat-tab-group>
                       
                 </div>
             </div>

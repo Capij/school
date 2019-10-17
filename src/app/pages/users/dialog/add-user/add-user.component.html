@@ -54,6 +54,28 @@
                                 </mat-error>  
                         </mat-form-field>
 
+
+                        <mat-form-field class="col-md-9">
+                                <input type="text" placeholder="Estudiante" aria-label="Assignee" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (selectionChange)="studentSelect($event.value)">
+                                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                        {{option.name}} {{option.last_name}}
+                                        </mat-option>
+                                </mat-autocomplete>                                
+                        </mat-form-field>
+
+                        <div class="col-md-3">
+                                <button mat-raised-button color="primary" (click)="onStudent()" [disabled]="false">
+                                                Aceptar
+                                </button>
+                        </div>
+
+                        <div class="col-md-12">
+                                <mat-card *ngFor="let student of students">
+                                        {{student.name}} {{student.last_name}}
+                                </mat-card>
+                        </div>
+                                        
                         
 
 

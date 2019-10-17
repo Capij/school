@@ -6,5 +6,5 @@ export interface StudenModel{
     last_name: string,
     money: number,
     groupsID: Array<string>,
-    timestap: number
+    timestap?: number
 }

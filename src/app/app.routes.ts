@@ -18,7 +18,9 @@ export const ROUTES: Routes =
 [
 
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'studen', component: StudensComponent, canActivate: [AuthGuard] },
     { path: 'studens', component: StudensComponent, canActivate: [AuthGuard] },
+    
     { path: 'dinning_room', component: DinningComponent, canActivate: [AuthGuard] },
     { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
     { path: 'groups', component: GroupsComponent, canActivate: [AuthGuard] },
