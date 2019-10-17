@@ -6,7 +6,7 @@ import {map, startWith} from 'rxjs/operators';
 import { StudenModel } from '../../../../models/studen.model';
 import { UsersModel } from '../../../../models/users.model';
 import { UsersService } from '../../services/users.service'
-
+import { StudentsService } from '../../../studens/service/students.service';
 export interface User {
   name: string;
   last_name: string;
@@ -23,6 +23,8 @@ export class AddUserComponent implements OnInit {
   @Input() newUser =  true;
   @Output() save =  new EventEmitter();
   stop = false;
+  hide = true;
+
 
   fromNew =  new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -33,38 +35,37 @@ export class AddUserComponent implements OnInit {
 
   /////////////////////////////////////////////////////////7
   myControl = new FormControl();
-  options: User[] = [
-    {name: 'Jose Mary', last_name: "1wdw"},
-    {name: 'Alme Shelley', last_name: "2wdw"},
-    {name: 'Fer Igor', last_name: "2wdw"}
-  ];
+  options: StudenModel[];
 
   filteredOptions: Observable<User[]>;
 
   ///////////////////////////////////////////////////////////7
   students:StudenModel[]=[];
 
+  constructor(private us: UsersService,  private ss: StudentsService) {
+    this.ss.get().subscribe((res)=>{
+      this.options = res;
+      
+      this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.options.slice())
+      );
 
-
-  constructor(private us: UsersService) {
-
+    })
 
   }
 
   ngOnInit() {
+    if(this.user){
+      this.fromNew.patchValue(this.user);
+      this.ss.getStudents(this.user.uid).subscribe((res)=>{
+        this.students = res;
+      });
+    }
 
-///////////////////////////////////////////////////////////////////////////
-    this.filteredOptions = this.myControl.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => typeof value === 'string' ? value : value.name),
-      map(name => name ? this._filter(name) : this.options.slice())
-    );
-///////////////////////////////////////////////////////////////////////////////
-
-
-
-  }
+   }
 
   onSave(){
     this.stop = true;
@@ -82,7 +83,7 @@ export class AddUserComponent implements OnInit {
         //console.log(this.fromNewProyects.value.typeTime)
         this.fromNew.value.timestamp = Date.now();
 
-        this.us.save(this.fromNew.value)
+        this.us.save(this.fromNew.value, this.students)
         .then((res)=>{this.save.emit(res)})
         .catch((err)=> console.log(err));
       
@@ -93,17 +94,12 @@ export class AddUserComponent implements OnInit {
     }
   }
 
+
+
   get name() { return this.fromNew.get('name'); }
   get last_name() { return this.fromNew.get('last_name'); }
   get email() { return this.fromNew.get('email'); }
   get password() { return this.fromNew.get('password'); }
-
-
-
-
-
-
-
 
 
 
@@ -126,22 +122,20 @@ export class AddUserComponent implements OnInit {
 
   onStudent(){
     if(this.myControl.value.name){
-      var student:StudenModel={
-        groupID: "",
-        usersID: [],
-        name: this.myControl.value.name,
-        last_name: this.myControl.value.last_name,
-        money: 0,
-        groupsID: []
+      let flag= true;
+      this.students.forEach((res)=>{
+        console.log(res.id +"=="+ this.myControl.value.id);
+        if( res.id == this.myControl.value.id){
+          flag = false;
+        }
+      });
+
+      if(flag){
+        this.students.push(this.myControl.value);
       }
 
-      
-      this.students.push(student);
-      console.log(this.myControl.value);
-    }else{
-      console.log(this.myControl.value);
     }
-
+    this.myControl.patchValue("");
   }
 
 

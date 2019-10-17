@@ -12,8 +12,8 @@ import { StudentsService } from '../../service/students.service';
   styleUrls: ['./add-student.component.css']
 })
 export class AddStudentComponent implements OnInit {
-  @Input() teacher: StudenModel; 
-  @Input() newTeacher =  true;
+  @Input() student: StudenModel; 
+  @Input() newStudent =  true;
   @Output() save =  new EventEmitter();
   stop = false;
 
@@ -21,7 +21,7 @@ export class AddStudentComponent implements OnInit {
   formNew = new FormGroup({
     name: new FormControl('', [Validators.required]),
     last_name: new FormControl('', [Validators.required]),
-    group: new FormControl('', [Validators.required]),
+    groupID: new FormControl(''),
   })
 
   groups:GroupsModel[];
@@ -40,9 +40,9 @@ export class AddStudentComponent implements OnInit {
   onSave(){
     this.stop = true;
     if(this.formNew.valid){
-      if(!this.newTeacher && this.teacher){
+      if(!this.newStudent && this.student){
         const updated ={
-          id: this.teacher.id,
+          id: this.student.id,
           ...this.formNew.value
         };
         this.ss.update(updated)
@@ -50,9 +50,7 @@ export class AddStudentComponent implements OnInit {
         .catch((err) => console.log(err));
 
       }else{
-        //console.log(this.fromNewProyects.value.typeTime)
-        this.formNew.value.timestamp = Date.now();
-
+  
         this.ss.save(this.formNew.value)
         .then((res)=>{this.save.emit(res)})
         .catch((err)=> console.log(err));
@@ -66,6 +64,6 @@ export class AddStudentComponent implements OnInit {
 
   get name() { return this.formNew.get('name'); }
   get last_name() { return this.formNew.get('last_name'); }
-  get group() { return this.formNew.get('group'); }
+  get groupID() { return this.formNew.get('groupID'); }
 
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from  "@angular/router";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { StudenModel } from '../../../models/studen.model';
-import { map } from 'rxjs/operators'
+import { map, switchMap } from 'rxjs/operators'
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class StudentsService {
   constructor(private afs: AngularFirestore) { }
 
   get(): Observable<StudenModel[]>{
-
+    
     return this.afs.collection('students').snapshotChanges()
     .pipe(
       map((doc)=>{
@@ -29,7 +29,14 @@ export class StudentsService {
 
 
   save(student:StudenModel){
-
+    student.money=0;
+    student.groupsID = [];
+    student.usersID = [];
+    student.timestap =  Date.now();
+    if(student.groupID.length != 0){
+      student.groupsID.push(student.groupID);
+    }
+    
     return this.afs.collection('students').add(student);
 
   }
@@ -44,6 +51,23 @@ export class StudentsService {
 
   }
 
+
+  getStudents(uid:string){
+    return this.afs.collection('students', res => res.where('usersID','array-contains', uid)).snapshotChanges()
+    .pipe(
+      map((doc)=>{
+        return doc.map((ele) =>{
+          return {
+            id: ele.payload.doc.id,
+            ...ele.payload.doc.data()
+          }
+        }) as StudenModel[];
+      
+      
+      })
+    )
+  
+  }
   
 
 }

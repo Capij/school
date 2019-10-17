@@ -30,7 +30,7 @@ export class AddGroupAdminComponent implements OnInit {
 
 
   uid :string;
-    teacherData: TeacherModel[];
+  teacherData: TeacherModel[];
   
   subjects: any[];
 

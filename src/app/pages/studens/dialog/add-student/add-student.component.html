@@ -34,13 +34,13 @@
 
 
                         <mat-form-field class="col-md-12">
-                                <mat-select formControlName="group" placeholder="Grupo">
+                                <mat-select formControlName="groupID" placeholder="Grupo">
                                   <mat-option *ngFor="let group of groups" [value]="group.id">
                                     {{group.name}}
                                   </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="group.invalid && (group.dirty || group.touched)">
-                                                <div *ngIf="group.errors.required">
+                                <mat-error *ngIf="groupID.invalid && (groupID.dirty || groupID.touched)">
+                                                <div *ngIf="groupID.errors.required">
                                                         Agrega una materia
                                                 </div>  
                                 </mat-error>  

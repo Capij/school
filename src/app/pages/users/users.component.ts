@@ -7,7 +7,6 @@ import { take } from 'rxjs/internal/operators/take';
 import { AddUserComponent } from './dialog/add-user/add-user.component'
 import { UsersModel } from '../../models/users.model';
 import { UsersService } from './services/users.service';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -46,5 +45,22 @@ export class UsersComponent implements OnInit {
     });
   }
 
+
+  onEdit(user: UsersModel){
+    this.dialogRef =  this.dialog.open(AddUserComponent,{
+      width: '500px'
+    });
+    
+    this.dialogRef.componentInstance.user = user;
+    this.dialogRef.componentInstance.newUser = false;
+
+    
+    this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef) => {
+      if(projectDocRef){
+        this.dialogRef.close();
+      }
+
+    });
+  }
 
 }
