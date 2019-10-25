@@ -1,0 +1,98 @@
+<form [formGroup]="fromNew">
+                <mat-dialog-content>
+        <div class="row">
+                <div class="col-md-12">
+                        <div class="row">
+                                <div class="col-md-12" *ngIf="error != '' "> <mat-card style="background: #ee4343;">{{error}}</mat-card> </div>
+                                <div class="col-md-12">
+                                        <section class="in-line">
+                                                <mat-checkbox class="check-margin" color="primary" formControlName="monday" >Lunes</mat-checkbox>
+                                                <mat-checkbox class="check-margin" color="primary" formControlName="tuesday">Martes</mat-checkbox>
+                                                <mat-checkbox class="check-margin" color="primary" formControlName="wednesday">Miercoles</mat-checkbox>
+               
+                                                <mat-checkbox class="check-margin" color="primary" formControlName="thursday">Jueves</mat-checkbox>
+                                                <mat-checkbox class="check-margin" color="primary" formControlName="friday">Viernes</mat-checkbox>
+                                                <mat-checkbox class="check-margin" color="primary" formControlName="saturday">Sabado</mat-checkbox>
+
+                                        </section>
+                                </div>
+
+                                <div class="col-md-5">
+                                        <div class="row">
+
+                                                <!-- <mat-form-field class="col-md-12">
+                                                        <mat-select placeholder="Inicio" [value]="1">
+                                                                <mat-option *ngFor="let day of week" [value]="day.id"> {{day.day }}</mat-option>
+                                                        </mat-select>
+                                                </mat-form-field>  -->
+
+                                                <mat-form-field class="col-md-6">
+                                                        <mat-select placeholder="Inicio" formControlName="hourInit" [value]="1" (selectionChange)="init($event.value)">
+                                                                <mat-option *ngFor="let hour of hours" [value]="hour.id"> {{hour.hour }}</mat-option>
+                        
+                                                        </mat-select>
+                                                </mat-form-field> 
+                                                <mat-form-field class="col-md-6">
+                                                        <mat-select placeholder="Final" formControlName="hourEnd" [value]="1" >
+                                                                <mat-option *ngFor="let hour of hoursS" [value]="hour.id"> {{hour.hour }}</mat-option>                        
+                                                        </mat-select>
+                                                </mat-form-field> 
+
+                                                <mat-form-field class="col-md-12">
+                                                        <mat-select placeholder="Materia" (selectionChange)="searchTeacher($event.value)" formControlName="subject">
+                                                                <mat-option *ngFor="let subject of sunjects" [value]="subject.id"> {{subject.name }} {{subject.last_name}}</mat-option>
+                                                        </mat-select>
+                                                </mat-form-field>                         
+                        
+                                
+                                                <mat-form-field class="col-md-8">
+                                                        <mat-select placeholder="Maestro" formControlName="teacher">
+                                                                <mat-option *ngFor="let teacher of teacherSearch" [value]="teacher.id"> {{teacher.name }} {{teacher.last_name}}</mat-option>
+                        
+                                                        </mat-select>
+                                                </mat-form-field>              
+                                                <div class="col-md-4 mt-md-3">
+                                                        <button mat-button color="primary" (click)="onAddClass()">
+                                                                Agregar
+                                                        </button>  
+                                                </div>                                        
+
+
+                                                
+                                        </div>
+
+                                </div>
+
+
+                                <div class="col-md-7">
+
+                                        <div style="height: 225px; overflow-x: auto;">
+                                                        <mat-card *ngFor="let sub of daySubjects">{{sub.subjectName}} </mat-card>
+
+                                        </div>
+
+
+                                </div>
+      
+                        
+                        
+                        </div>
+                </div>
+
+                                      
+                        
+        </div>
+</mat-dialog-content>
+
+<mat-dialog-actions aling="end">
+                <button mat-button mat-dialog-close>
+                                Cancelar
+                </button>
+                <button mat-raised-button color="primary" (click)="onSave()">
+                        Agregar
+                </button>
+
+</mat-dialog-actions>
+
+
+</form>

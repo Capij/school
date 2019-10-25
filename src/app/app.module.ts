@@ -5,8 +5,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
-import { MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
-import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -27,6 +28,17 @@ import { DinningComponent } from './pages/dinning/dinning.component';
 import { CalendarComponent } from './pages/calendar/calendar.component';
 import { GroupsComponent } from './pages/groups/groups.component';
 import { AddGroupsComponent } from './pages/groups/add-groups/add-groups.component';
+import { UsersComponent } from './pages/users/users.component';
+import { TeacherComponent } from './pages/teacher/teacher.component';
+import { GroupAdminComponent } from './pages/group-admin/group-admin.component';
+import { AddGroupAdminComponent } from './pages/group-admin/dialog/add-group-admin/add-group-admin.component';
+import { AddTeacherComponent } from './pages/teacher/dialog/add-teacher/add-teacher.component';
+import { DeleteTeacherComponent } from './pages/teacher/dialog/delete-teacher/delete-teacher.component';
+import { ViewGroupAComponent } from './pages/group-admin/view-group-a/view-group-a.component';
+import { AddDayComponent } from './pages/group-admin/dialog/add-day/add-day.component';
+import { AddUserComponent } from './pages/users/dialog/add-user/add-user.component';
+import { StudenComponent } from './pages/studen/studen.component';
+import { AddStudentComponent } from './pages/studens/dialog/add-student/add-student.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +52,18 @@ import { AddGroupsComponent } from './pages/groups/add-groups/add-groups.compone
     DinningComponent,
     CalendarComponent,
     GroupsComponent,
-    AddGroupsComponent
+    AddGroupsComponent,
+    UsersComponent,
+    TeacherComponent,
+    GroupAdminComponent,
+    AddGroupAdminComponent,
+    AddTeacherComponent,
+    DeleteTeacherComponent,
+    ViewGroupAComponent,
+    AddDayComponent,
+    AddUserComponent,
+    StudenComponent,
+    AddStudentComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +93,19 @@ import { AddGroupsComponent } from './pages/groups/add-groups/add-groups.compone
     MatPaginatorModule,
     MatTabsModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule,
+    MatAutocompleteModule
+    
+  ],
+  entryComponents:[
+    AddGroupAdminComponent,
+    AddTeacherComponent,
+    AddDayComponent,
+    DeleteTeacherComponent,
+    AddUserComponent,
+    AddStudentComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
