@@ -6,6 +6,7 @@ import { AddStudentComponent } from './dialog/add-student/add-student.component'
 import { take } from 'rxjs/internal/operators/take';
 import { StudentsService } from './service/students.service';
 import { StudenModel } from '../../models/studen.model';
+import { AddDayComponent } from '../group-admin/dialog/add-day/add-day.component';
 
 
 
@@ -49,5 +50,21 @@ export class StudensComponent implements OnInit {
 
     });
 
+  }
+
+
+
+  onEdit(element): void{
+    this.dialogRef = this.dialog.open(AddStudentComponent,{
+      width: '500px'
+    });
+
+    this.dialogRef.componentInstance.student = element;
+    this.dialogRef.componentInstance.newStudent = false;
+    this.dialogRef.componentInstance.save.pipe(take(1)).subscribe((projectDocRef)=>{
+      if(projectDocRef){
+        this.dialogRef.close();
+      }
+    })
   }
 }

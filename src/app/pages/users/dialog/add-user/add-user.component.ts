@@ -41,6 +41,7 @@ export class AddUserComponent implements OnInit {
 
   ///////////////////////////////////////////////////////////7
   students:StudenModel[]=[];
+  studentsaOrigin:string[]=[];
 
   constructor(private us: UsersService,  private ss: StudentsService) {
     this.ss.get().subscribe((res)=>{
@@ -62,6 +63,10 @@ export class AddUserComponent implements OnInit {
       this.fromNew.patchValue(this.user);
       this.ss.getStudents(this.user.uid).subscribe((res)=>{
         this.students = res;
+        res.forEach((res)=>{
+          this.studentsaOrigin.push(res.id);
+        });
+
       });
     }
 
@@ -75,7 +80,7 @@ export class AddUserComponent implements OnInit {
           id: this.user.id,
           ...this.fromNew.value
         };
-        this.us.update(updated)
+        this.us.update(updated, this.students,this.studentsaOrigin)
         .then(() => this.save.emit(updated))
         .catch((err) => console.log(err));
 
@@ -122,9 +127,8 @@ export class AddUserComponent implements OnInit {
 
   onStudent(){
     if(this.myControl.value.name){
-      let flag= true;
+      let flag = true;
       this.students.forEach((res)=>{
-        console.log(res.id +"=="+ this.myControl.value.id);
         if( res.id == this.myControl.value.id){
           flag = false;
         }
@@ -139,6 +143,20 @@ export class AddUserComponent implements OnInit {
   }
 
 
+  onStudenDelete(studentID){
+    console.log(this.students);
+    let i = 0;
+    this.students.forEach((res)=>{
+      if(res.id == studentID){
+         this.students.splice(i,1);
+
+      }
+      i++;
+    });
+    console.log(this.students);
+    console.log(studentID);
+
+  }
 }
 
 

@@ -33,8 +33,8 @@ export class StudentsService {
     student.groupsID = [];
     student.usersID = [];
     student.timestap =  Date.now();
-    if(student.groupID.length != 0){
-      student.groupsID.push(student.groupID);
+    if(student.groupID.id.length != 0){
+      student.groupsID.push(student.groupID.id);
     }
     
     return this.afs.collection('students').add(student);

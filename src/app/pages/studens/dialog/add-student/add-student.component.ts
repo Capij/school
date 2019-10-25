@@ -5,6 +5,7 @@ import { GroupsModel } from '../../../../models/groups.model';
 import { GroupService } from '../../../group-admin/service/group.service';
 
 import { StudentsService } from '../../service/students.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-add-student',
@@ -35,12 +36,35 @@ export class AddStudentComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.student){
+      let group = '';
+      if(this.student.groupID.id){
+        group = this.student.groupID.id;
+      }
+      this.formNew.setValue({
+                              'name': this.student.name,
+                              'last_name': this.student.last_name,
+                              'groupID': group
+                            });
+
+    }
   }
 
   onSave(){
     this.stop = true;
     if(this.formNew.valid){
+      let group:GroupsModel;
+
+      this.groups.forEach((res)=>{
+        if(res.id == this.formNew.value.groupID){
+           group =  res;
+        }
+      })
+      
+      this.formNew.value.groupID = group;
+
       if(!this.newStudent && this.student){
+
         const updated ={
           id: this.student.id,
           ...this.formNew.value

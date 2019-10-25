@@ -1,3 +1,5 @@
+import { StudenModel } from './studen.model';
+
 export interface UsersModel{
     id ?:string
     name:string,
@@ -5,5 +7,6 @@ export interface UsersModel{
     deleted:boolean,
     password: string,
     pass:boolean,
-    uid:string
+    uid:string,
+    students: Array<string>
 }
