@@ -24,7 +24,7 @@ export class TeacherComponent implements OnInit {
   dialogRefD: MatDialogRef<DeleteTeacherComponent>;
   authU:string;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; 
 
   constructor(private dialog:MatDialog , private ts:TeacherService, private auth:AuthService) {
     this.ts.get().subscribe((res)=>{

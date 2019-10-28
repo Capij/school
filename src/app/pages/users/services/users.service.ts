@@ -35,9 +35,6 @@ export class UsersService {
         user.deleted = false;
         user.pass = false;
         user.uid = res.user.uid;
-        student.forEach((res)=>{
-          user.students.push(res.id);
-        });
 
         this.afs.collection('users').add(user);
 
@@ -59,27 +56,28 @@ export class UsersService {
 
   }
 
-  async update(user:UsersModel, student:StudenModel[], studentsOrigin:string[]){
+  async update(user:UsersModel, student:StudenModel[], studentsDelete:StudenModel[]){
     if(user.id){
 
-      console.log(student);
-      console.log(studentsOrigin);
-
-      studentsOrigin.forEach((res)=>{
-        student.forEach((resq)=>{
-          
-        });
-        console.log(res);
-        //res.usersID.push(user.uid)
-        // this.ss.update(res);
+      studentsDelete.forEach((res)=>{
+        if(res.usersID.indexOf(user.uid) > -1){
+          res.usersID.splice(res.usersID.indexOf(user.uid),1);
+          this.ss.update(res);
+        }
       });
-      
-      // user.students =[];
-      // student.forEach((res)=>{
-      //   user.students.push(res.id);
-      // });
 
-     // return this.afs.doc<StudenModel>(`users/${user.id}`).update(user);
+
+      student.forEach((res)=>{
+        if(res.usersID === undefined){
+          res.usersID = [];
+        }
+        if(res.usersID.indexOf(user.uid) == -1){
+          res.usersID.push(user.uid);
+          this.ss.update(res);
+        }
+      }); 
+
+      return this.afs.doc<UsersModel>(`users/${user.id}`).update(user);
     }else{
       throw Error('No cuenta con id')
     }

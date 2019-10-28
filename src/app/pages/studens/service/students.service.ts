@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { StudenModel } from '../../../models/studen.model';
 import { map, switchMap } from 'rxjs/operators'
 import { Observable } from 'rxjs';
+import { GroupAdminComponent } from '../../../group-admin/group-admin.component';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +34,13 @@ export class StudentsService {
     student.groupsID = [];
     student.usersID = [];
     student.timestap =  Date.now();
-    if(student.groupID.id.length != 0){
-      student.groupsID.push(student.groupID.id);
+    if(student.groupID != undefined){
+      if(student.groupID.id.length != 0){
+        student.groupsID.push(student.groupID.id);
+
+      }
+    }else{
+      student.groupID = { };
     }
     
     return this.afs.collection('students').add(student);

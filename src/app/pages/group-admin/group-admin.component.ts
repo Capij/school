@@ -27,6 +27,7 @@ export class GroupAdminComponent implements OnInit {
   constructor(private dialog:MatDialog, private gs:GroupService, private router:Router) {
     this.gs.get().subscribe((res)=>{
       this.dataSource =  new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
     })
   }
 

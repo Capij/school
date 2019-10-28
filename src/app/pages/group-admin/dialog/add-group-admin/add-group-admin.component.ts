@@ -55,10 +55,19 @@ export class AddGroupAdminComponent implements OnInit {
   onSave(){  
     this.stop = true;
     if(this.fromNew.valid){
+
+      let teacher;
+      this.teacherData.forEach((element ) =>{
+        if(element.id == this.fromNew.value.teacher){
+          teacher = element;
+        }
+      });
       if(!this.newGroup && this.group){
         const projectUpdated ={
           id: this.group.id,
-          ...this.fromNew.value
+          name: this.fromNew.value.name,
+          grade: this.fromNew.value.grade,
+          teacher: teacher
         };
         this.gs.update(projectUpdated)
         .then(() => this.save.emit(projectUpdated))
@@ -66,8 +75,12 @@ export class AddGroupAdminComponent implements OnInit {
 
       }else{
         //console.log(this.fromNewProyects.value.typeTime)
-
-        this.gs.save(this.fromNew.value)
+        const projectNew ={
+          name: this.fromNew.value.name,
+          grade: this.fromNew.value.grade,
+          teacher: teacher
+        };
+        this.gs.save(projectNew)
         .then((res)=>{this.save.emit(res)})
         .catch((err)=> console.log(err));
       

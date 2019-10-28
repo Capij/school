@@ -2,7 +2,7 @@ import { GroupsModel } from './groups.model';
 
 export interface StudenModel{
     id ?:string,
-    groupID: GroupsModel,
+    groupID : GroupsModel,
     usersID: Array<string>
     name: string,
     last_name: string,

@@ -18,23 +18,29 @@ import { AddDayComponent } from '../group-admin/dialog/add-day/add-day.component
 
 export class StudensComponent implements OnInit {
 
-
   studen = 1;
-  dataSource = new MatTableDataSource<StudenModel>();
-  dialogRef: MatDialogRef<AddStudentComponent>;
 
   displayedColumns: string[] = ['nombre', 'apellido','group', 'star'];
+  dataSource = new MatTableDataSource<StudenModel>();
+  
+  dialogRef: MatDialogRef<AddStudentComponent>;
+  
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   
   constructor(private dialog:MatDialog, private ss: StudentsService ) {
 
     this.ss.get().subscribe((res)=>{
       this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
     })
 
   }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
   }
 
   

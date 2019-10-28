@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef} from '@angular/material';
@@ -15,15 +15,17 @@ import { UsersService } from './services/users.service';
 export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['nombre', 'apellido', 'email','star'];
-
   dataSource = new MatTableDataSource<UsersModel>();
-
   dialogRef: MatDialogRef<AddUserComponent>;
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
 
   constructor(private dialog:MatDialog, private us: UsersService) {
     this.us.get().subscribe((res)=>{
-      
+
       this.dataSource =  new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
 
     })
   }

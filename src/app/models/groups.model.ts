@@ -1,12 +1,14 @@
+import { TeacherModel } from './teacher.model';
+
 export interface GroupsModel{
     id ?: string,
-    name: string,
-    teacher: string,
-    studens: number,
-    archived: boolean,
-    grade: number,
-    week: DaysModel,
-    timestap: number
+    name ?: string,
+    teacher ?: TeacherModel,
+    studens ?: number,
+    archived ?: boolean,
+    grade ?: number,
+    week ?: DaysModel,
+    timestap ?: number
 
 }
 
