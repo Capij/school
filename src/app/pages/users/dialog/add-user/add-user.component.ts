@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl ,Validators } from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import { FatherModel } from '../../../../models/father.model';
 
 import { StudenModel } from '../../../../models/studen.model';
 import { UsersModel } from '../../../../models/users.model';
@@ -19,7 +20,7 @@ export interface User {
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements OnInit {
-  @Input() user: UsersModel; 
+  @Input() user: FatherModel; 
   @Input() newUser =  true;
   @Output() save =  new EventEmitter();
   stop = false;

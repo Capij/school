@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { GeneralService } from '../services/general.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +14,11 @@ import * as CryptoJS from 'crypto-js';
 
 export class AuthService {
 
-  constructor(private router: Router, public afAuth: AngularFireAuth, private afs:AngularFirestore ) { }
+  constructor(
+    private router: Router, 
+    public afAuth: AngularFireAuth,
+    private afs:AngularFirestore,
+    private gs: GeneralService ) { }
 
   async register(user: any) {
     console.log(`Registering '${user.nombre}' with email '${user.email}'...`);
@@ -41,6 +46,14 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+      this.afAuth.user.subscribe((res)=>{
+        console.log(res);
+        this.gs.getUser(res.uid).subscribe((resp)=>{
+          localStorage.setItem("Uv", CryptoJS.AES.encrypt(JSON.stringify(resp), "school").toString())
+          localStorage.setItem("u", resp[0].uid);
+          localStorage.setItem("p", resp[0].permission.toString());
+        })
+      });
       this.router.navigate(['/dashboard']);
     } catch (e) {
       console.error(e);
@@ -53,6 +66,9 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
+    localStorage.removeItem("Uvs");
+    localStorage.removeItem("u");
+    localStorage.removeItem("p");
     this.router.navigate(['login']);
   }
 

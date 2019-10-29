@@ -5,7 +5,7 @@ import { MatDialog, MatDialogRef} from '@angular/material';
 import { take } from 'rxjs/internal/operators/take';
 
 import { AddUserComponent } from './dialog/add-user/add-user.component'
-import { UsersModel } from '../../models/users.model';
+import { FatherModel } from '../../models/father.model';
 import { UsersService } from './services/users.service';
 @Component({
   selector: 'app-users',
@@ -15,7 +15,7 @@ import { UsersService } from './services/users.service';
 export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['nombre', 'apellido', 'email','star'];
-  dataSource = new MatTableDataSource<UsersModel>();
+  dataSource = new MatTableDataSource<FatherModel>();
   dialogRef: MatDialogRef<AddUserComponent>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
   }
 
 
-  onEdit(user: UsersModel){
+  onEdit(user: FatherModel){
     this.dialogRef =  this.dialog.open(AddUserComponent,{
       width: '500px'
     });

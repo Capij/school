@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UsersModel } from '../../../models/users.model';
+import { FatherModel } from '../../../models/father.model';
 import { StudenModel } from '../../../models/studen.model';
 import { StudentsService } from '../../studens/service/students.service';
+import { GeneralService } from '../../../shared/services/general.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
@@ -12,10 +13,14 @@ import { Observable } from 'rxjs';
 })
 export class UsersService {
 
-  constructor(private afs: AngularFirestore, private afAuth: AngularFireAuth, private ss: StudentsService) { }
+  constructor(
+    private afs: AngularFirestore,
+    private afAuth: AngularFireAuth,
+    private ss: StudentsService,
+    private gs:GeneralService) { }
 
-  get(): Observable<UsersModel[]>{
-    return this.afs.collection('users', res => res.where('deleted','==',false)).snapshotChanges()
+  get(): Observable<FatherModel[]>{
+    return this.afs.collection('fathers', res => res.where('deleted','==',false)).snapshotChanges()
     .pipe(
       map((doc)=>{
         return doc.map((ele) =>{
@@ -23,27 +28,27 @@ export class UsersService {
             id: ele.payload.doc.id,
             ...ele.payload.doc.data()
           }
-        }) as UsersModel[];
+        }) as FatherModel[];
       })
     )
   }
 
-  async save(user:UsersModel, student:StudenModel[]){
+  async save(father:FatherModel, student:StudenModel[]){
     try {
-      return await this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then((res)=>{
+      return await this.afAuth.auth.createUserWithEmailAndPassword(father.email, father.password).then((res)=>{
 
-        user.deleted = false;
-        user.pass = false;
-        user.uid = res.user.uid;
+        father.deleted = false;
+        father.uid = res.user.uid;
 
-        this.afs.collection('users').add(user);
+        this.afs.collection('fathers').add(father);
 
         student.forEach((res)=>{
-          res.usersID.push(user.uid)
+          res.usersID.push(father.uid)
           this.ss.update(res);
         })
+        this.gs.addUser(father,3);
         
-        return user;
+        return father;
       });   
 
     } catch (e) {
@@ -56,12 +61,12 @@ export class UsersService {
 
   }
 
-  async update(user:UsersModel, student:StudenModel[], studentsDelete:StudenModel[]){
-    if(user.id){
+  async update(father:FatherModel, student:StudenModel[], studentsDelete:StudenModel[]){
+    if(father.id){
 
       studentsDelete.forEach((res)=>{
-        if(res.usersID.indexOf(user.uid) > -1){
-          res.usersID.splice(res.usersID.indexOf(user.uid),1);
+        if(res.usersID.indexOf(father.uid) > -1){
+          res.usersID.splice(res.usersID.indexOf(father.uid),1);
           this.ss.update(res);
         }
       });
@@ -71,13 +76,13 @@ export class UsersService {
         if(res.usersID === undefined){
           res.usersID = [];
         }
-        if(res.usersID.indexOf(user.uid) == -1){
-          res.usersID.push(user.uid);
+        if(res.usersID.indexOf(father.uid) == -1){
+          res.usersID.push(father.uid);
           this.ss.update(res);
         }
       }); 
 
-      return this.afs.doc<UsersModel>(`users/${user.id}`).update(user);
+      return this.afs.doc<FatherModel>(`fathers/${father.id}`).update(father);
     }else{
       throw Error('No cuenta con id')
     }

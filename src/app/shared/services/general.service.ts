@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators'
 import { Observable } from 'rxjs';
+import { UsersModel } from '../../models/users.model';
 
 
 export interface SubjectModel{
@@ -31,6 +32,35 @@ export class GeneralService {
     )
   }
 
+
+  addUser(user:any,permission :number){
+    if(user){
+      const data:UsersModel={
+        email: user.email,
+        deleted: false,
+        pass: false,
+        uid: user.uid,
+        permission: permission
+      }
+      this.afs.collection('users').add(data);
+    }
+  }
+
+  getUser(id): Observable<UsersModel[]>{
+
+    return this.afs.collection('users', res => res.where('uid', '==',id)).snapshotChanges()
+    .pipe(
+      map((doc)=>{
+        return doc.map((ele) =>{
+          return {
+            id: ele.payload.doc.id,
+            ...ele.payload.doc.data()
+          }
+        }) as UsersModel[];
+      })
+      )
+
+  }
   
 
 }

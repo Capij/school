@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { GeneralService } from '../../../shared/services/general.service';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { TeacherModel } from '../../../models/teacher.model';
+import { UsersModel } from '../../../models/users.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as CryptoJS from 'crypto-js';
@@ -15,7 +17,11 @@ import { AuthService } from '../../../shared/auth/auth.service';
 export class TeacherService {
 
   us:TeacherModel;
-  constructor(private router:Router , private afs: AngularFirestore,public afAuth: AngularFireAuth, private auth: AuthService) { }
+  constructor(private router:Router ,
+              private afs: AngularFirestore,
+              public afAuth: AngularFireAuth,
+              private auth: AuthService,
+              private gs: GeneralService) { }
 
 
   get(): Observable<TeacherModel[]>{
@@ -41,6 +47,7 @@ export class TeacherService {
           teacher.admin = false;
           teacher.uid = res.user.uid;
 
+          this.gs.addUser(teacher,2);
           return this.afs.collection('teacher').add(teacher);
 
       });   

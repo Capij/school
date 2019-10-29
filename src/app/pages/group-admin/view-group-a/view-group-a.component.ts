@@ -114,7 +114,7 @@ export class ViewGroupAComponent implements OnInit {
 
         });
     }else if(this.status == 1){
-      console.log("dasdsad");
+      
 
     }
   }
