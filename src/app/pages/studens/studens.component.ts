@@ -6,7 +6,6 @@ import { AddStudentComponent } from './dialog/add-student/add-student.component'
 import { take } from 'rxjs/internal/operators/take';
 import { StudentsService } from './service/students.service';
 import { StudenModel } from '../../models/studen.model';
-import { AddDayComponent } from '../group-admin/dialog/add-day/add-day.component';
 
 
 

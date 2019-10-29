@@ -26,6 +26,8 @@ export class AddStudentComponent implements OnInit {
 
   groups:GroupsModel[];
 
+  group:GroupsModel;
+
   constructor(private gs:GroupService, private ss: StudentsService) {
 
     this.gs.get().subscribe((res)=>{
@@ -36,9 +38,12 @@ export class AddStudentComponent implements OnInit {
 
   ngOnInit() {
     if(this.student){
+
       let group = '';
+
       if(this.student.groupID.id){
         group = this.student.groupID.id;
+        this.group= this.student.groupID;
       }
 
       this.formNew.setValue({
@@ -70,7 +75,7 @@ export class AddStudentComponent implements OnInit {
           id: this.student.id,
           ...this.formNew.value
         };
-        this.ss.update(updated)
+        this.ss.update(updated, this.group)
         .then(() => this.save.emit(updated))
         .catch((err) => console.log(err));
 

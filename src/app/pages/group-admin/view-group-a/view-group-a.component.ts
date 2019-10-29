@@ -7,19 +7,24 @@ import { take } from 'rxjs/internal/operators/take';
 
 import { GroupService } from '../service/group.service';
 import { GroupsModel } from '../../../models/groups.model';
+import { StudenModel } from '../../../models/studen.model';
+import { StudentsService } from '../../studens/service/students.service';
 import { AddDayComponent } from '../dialog/add-day/add-day.component';
+
 @Component({
   selector: 'app-view-group-a',
   templateUrl: './view-group-a.component.html',
   styleUrls: ['./view-group-a.component.css']
 })
 export class ViewGroupAComponent implements OnInit {
-  displayedColumns: string[] = ['group', 'responsable','grade','studensts','star'];
-  dataSource = new MatTableDataSource<GroupsModel>();
+
+  displayedColumns: string[] = ['nombre', 'apellido', 'star'];
+  dataSource = new MatTableDataSource<StudenModel>();
+  
 
   dialogRef: MatDialogRef<AddDayComponent>;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   group:GroupsModel;
  
@@ -58,7 +63,13 @@ export class ViewGroupAComponent implements OnInit {
     {id:31, hour:"22pm"}
   ];
 
-  constructor(private router:Router, private arouter: ActivatedRoute, private gs: GroupService,private dialog:MatDialog,) {
+
+  constructor(private router:Router,
+              private arouter: ActivatedRoute, 
+              private gs: GroupService,
+              private dialog:MatDialog,
+              private ss : StudentsService) {
+
     let type = this.arouter.snapshot.paramMap.get('type');
     let id  = this.arouter.snapshot.paramMap.get('id');
     if(type != 'a'){
@@ -78,7 +89,10 @@ export class ViewGroupAComponent implements OnInit {
           saturday: []
         }
       }
-      console.log(res);
+    });
+
+    this.ss.getGroupStudents(id).subscribe((res)=>{
+      this.dataSource = new MatTableDataSource(res);      
     });
 
   }
@@ -100,13 +114,15 @@ export class ViewGroupAComponent implements OnInit {
 
         });
     }else if(this.status == 1){
-      
+      console.log("dasdsad");
+
     }
   }
 
   mode(type: any){
     this.status = type.index;
     console.log(type.index);
+    this.dataSource.paginator = this.paginator;
   }
 
 }
