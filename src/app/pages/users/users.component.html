@@ -1,4 +1,6 @@
 <app-sidenav>
+        <mat-progress-bar *ngIf="!(load)" mode="indeterminate" class="progress-bar"> </mat-progress-bar>
+
                 <div class="container-fluid">
             
                         <div class="row my-1">
@@ -65,6 +67,7 @@
                                                     </div>
                 
                         </div>
+
                 </div>
                 
 </app-sidenav> 

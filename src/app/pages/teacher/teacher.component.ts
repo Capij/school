@@ -23,12 +23,15 @@ export class TeacherComponent implements OnInit {
   dialogRef: MatDialogRef<AddTeacherComponent>;
   dialogRefD: MatDialogRef<DeleteTeacherComponent>;
   authU:string;
+  load = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator; 
 
   constructor(private dialog:MatDialog , private ts:TeacherService, private auth:AuthService) {
     this.ts.get().subscribe((res)=>{
       this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.load = true;
     });
     this.auth.currentUserObservable.subscribe((res)=>{
       this.authU = res.uid;
@@ -36,7 +39,6 @@ export class TeacherComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
   }
   
   addTeacher(): void{

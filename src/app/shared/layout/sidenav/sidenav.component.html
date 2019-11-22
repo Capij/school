@@ -8,23 +8,39 @@
         <div class="text-center">
           <img src="https://seeklogo.com/images/C/colegio-vizcaya-logo-3376C9A632-seeklogo.com.png" width="50%">
         </div>
-        <p>usuarios</p>
-        <a mat-list-item routerLink="/dashboard">Dashboard</a>
-        <a mat-list-item routerLink="/studen">Estudiante</a>
-        <a mat-list-item routerLink="/dinning_room">Comedor</a>
-        <a mat-list-item routerLink="/calendar">Calendario</a>
 
-        <p>Maestros</p>
-        <a mat-list-item routerLink="/dashboard">Dashboard</a>
-        <a mat-list-item routerLink="/groups">Grupos</a>
-        <a mat-list-item routerLink="/calendar">Calendario</a>
 
-        <p>Administrador</p>
-        <a mat-list-item routerLink="/dashboard">Dashboard</a>
-        <a mat-list-item routerLink="/users">Usuarios</a>
-        <a mat-list-item routerLink="/studens">Estudiantes</a>
-        <a mat-list-item routerLink="/teachers">Maestros</a>
-        <a mat-list-item routerLink="/group_admin">Grupos</a>
+
+        <a *ngFor="let menu of menus" mat-list-item routerLink="{{menu.url}}">{{menu.name}}</a>
+
+              
+              <!-- <a mat-list-item routerLink="/dashboard">Dashboard</a>
+              <a mat-list-item routerLink="/studen">Estudiante</a>
+              <a mat-list-item routerLink="/dinning_room">Comedor</a>
+              <a mat-list-item routerLink="/calendar">Calendario</a>
+          
+    
+            <div *ngIf="user.permission == 2">
+                <p>Maestros</p>
+                <a mat-list-item routerLink="/dashboard">Dashboard</a>
+                <a mat-list-item routerLink="/groups">Grupos</a>
+                <a mat-list-item routerLink="/calendar">Calendario</a>
+            </div>
+    
+            <div *ngIf="user.permission == 1">
+                <p>Administrador</p>
+                <a mat-list-item routerLink="/dashboard">Dashboard</a>
+                <a mat-list-item routerLink="/users">Padres</a>
+                <a mat-list-item routerLink="/studens">Estudiantes</a>
+                <a mat-list-item routerLink="/teachers">Usuarios</a>
+                <a mat-list-item routerLink="/group_admin">Grupos</a>
+            </div> -->
+
+
+  
+  
+
+
 
 
       </mat-nav-list>
@@ -34,7 +50,7 @@
       <mat-toolbar color="primary" style="background: #ce172b;">
         <mat-toolbar-row>
           <button mat-icon-button>
-            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+            <mat-icon (click)="sidenav.toggle()" (click)="onEdit()">menu</mat-icon>
           </button>
           <h1>School</h1>
           <span class="menu-spacer"></span>

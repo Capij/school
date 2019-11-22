@@ -17,22 +17,27 @@ import { Router } from '@angular/router';
   styleUrls: ['./group-admin.component.css']
 })
 export class GroupAdminComponent implements OnInit {
+  load= false;
+
   displayedColumns: string[] = ['group', 'responsable','grade','studensts','star'];
   dataSource = new MatTableDataSource<GroupsModel>();
 
   dialogRef: MatDialogRef<AddGroupAdminComponent>;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
+  
   constructor(private dialog:MatDialog, private gs:GroupService, private router:Router) {
     this.gs.get().subscribe((res)=>{
+      this.load = true;    
       this.dataSource =  new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
     })
+
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+
   }
   
   addGroup(): void{

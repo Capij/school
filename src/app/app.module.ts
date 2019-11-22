@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
-import { MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
+import { MatProgressBarModule,MatAutocompleteModule, MatProgressSpinnerModule, MatExpansionModule, MatSelectModule, MatTabsModule, MatTableModule, MatMenuModule, MatDialogModule,MatInputModule,MatFormFieldModule, MatCardModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
@@ -78,7 +78,7 @@ import { AddStudentComponent } from './pages/studens/dialog/add-student/add-stud
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-
+    MatProgressBarModule,
     MatMenuModule,
     MatDialogModule,
     MatInputModule,

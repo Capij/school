@@ -18,6 +18,8 @@ export class UsersComponent implements OnInit {
   dataSource = new MatTableDataSource<FatherModel>();
   dialogRef: MatDialogRef<AddUserComponent>;
 
+  load = false;
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
 
@@ -26,7 +28,7 @@ export class UsersComponent implements OnInit {
 
       this.dataSource =  new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
-
+      this.load = true;
     })
   }
 

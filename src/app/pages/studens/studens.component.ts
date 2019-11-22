@@ -26,7 +26,7 @@ export class StudensComponent implements OnInit {
   
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-
+  load = false;
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   
   constructor(private dialog:MatDialog, private ss: StudentsService ) {
@@ -34,6 +34,7 @@ export class StudensComponent implements OnInit {
     this.ss.get().subscribe((res)=>{
       this.dataSource = new MatTableDataSource(res);
       this.dataSource.paginator = this.paginator;
+      this.load = true;
     })
 
   }

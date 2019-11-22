@@ -47,11 +47,8 @@ export class AuthService {
     try {
       await this.afAuth.auth.signInWithEmailAndPassword(email, password);
       this.afAuth.user.subscribe((res)=>{
-        console.log(res);
         this.gs.getUser(res.uid).subscribe((resp)=>{
           localStorage.setItem("Uv", CryptoJS.AES.encrypt(JSON.stringify(resp), "school").toString())
-          localStorage.setItem("u", resp[0].uid);
-          localStorage.setItem("p", resp[0].permission.toString());
         })
       });
       this.router.navigate(['/dashboard']);
@@ -66,9 +63,7 @@ export class AuthService {
 
   logout() {
     this.afAuth.auth.signOut();
-    localStorage.removeItem("Uvs");
-    localStorage.removeItem("u");
-    localStorage.removeItem("p");
+    localStorage.removeItem("Uv");
     this.router.navigate(['login']);
   }
 
